@@ -1,35 +1,43 @@
-import logo from './logo.png';
-import './App.css';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link
-} from "react-router-dom";
-import CreateSurvey from './component/create-survey';
-import { Button } from 'reactstrap';
-
+import "./App.css";
+import React from "react";
+import Logo from "./logo.png";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Menu from "./component/Menu";
+import CreateSurvey from "./component/CreateSurvey";
+import Published from "./component/Published";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function App() {
+  const [squestions, setSquestions] = useState([]);
+
   return (
-    <div className="App">
-    <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo"  /></header>
-    <Router>
-     
-        <Routes>
-          <Route path="/create" ></Route>
-          <Route path="/take">Take Survey</Route>
-          <Route path="/">
-            
-              <Link to="/create"> <Button className="survey-main-btn">Create Survey</Button></Link> 
-              <Link to="/take"> <Button className="survey-main-btn">Take Survey</Button></Link>
-        
-          </Route>
-        </Routes>
-      
-    </Router> 
-    </div>
+    <>
+      <div className="col-md-10 offset-md-1 col-12 text-center">
+        <Router>
+          <Link to="/">
+            <img className="col-md-6 img-fluid m-4" alt="logo" src={Logo} />
+          </Link>
+          <Routes>
+            <Route path="/" element={<Menu />} exact />
+            <Route
+              path="/create"
+              element={
+                <CreateSurvey
+                  squestions={squestions}
+                  setSquestions={setSquestions}
+                />
+              }
+              exact
+            />
+            <Route
+              path="/published"
+              element={<Published questions={squestions} />}
+            />
+          </Routes>
+        </Router>
+      </div>
+    </>
   );
 }
 
